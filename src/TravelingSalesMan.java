@@ -3,6 +3,8 @@ import java.io.*;
 import java.io.File;
 
 public class TravelingSalesMan{
+    //public static ArrayList<City> city = new ArrayList<City>();
+    public static City theCity = new City();
 
     public static void main(String[] args) {
         System.out.println("Welcome user, its time to solve a maze. Please enter the file path.");
@@ -18,7 +20,6 @@ public class TravelingSalesMan{
             e.printStackTrace();
         }
     }
-
 
     public static File check(String fileName) throws IOException {
         File file = new File(fileName);
@@ -45,14 +46,20 @@ public class TravelingSalesMan{
         BufferedReader line = new BufferedReader(new FileReader(file));
         //Isolates the String first line which shows N number of cities
         String ch = line.readLine();
-        Citys.NumCities = Integer.parseInt(ch);
+        City.NumCity = Integer.parseInt(ch);
         Random random = new Random();
-        Citys.initCities(Citys.NumCities);//allocating memory to array
 
-        for(int i = 0; i < Citys.NumCities; i++){
-            int randPop = random.nextInt(Citys.NumCities);
-            Citys.pop[i][randPop] = (randPop);
-            System.out.println(Citys.pop[1][randPop]);
+        City.initCities(City.getCities());//allocating memory to array
+        theCity.pop = new int[City.getCities()][City.getCities()];
+        int limit = City.getCities();
+        //Reads in the values, creating a random Population
+        for (int row = 0; row < City.getCities(); row++) {
+            String test = line.readLine();
+            int randPop = random.nextInt(limit);
+            for (int col = 0; col < City.getCities(); col++) {
+                theCity.pop[row][randPop] = test.charAt(col);
+            }
+            System.out.println("Assigned Value @ Col: " + City.pop[row][randPop]);
         }
     }
 }
