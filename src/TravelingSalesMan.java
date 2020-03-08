@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.*;
 import java.io.File;
 
-public class TravelingSalesMan{
+public class TravelingSalesMan {
     //public static ArrayList<City> city = new ArrayList<City>();
     public static City theCity = new City();
 
@@ -12,11 +12,9 @@ public class TravelingSalesMan{
         String fileName = input.nextLine() + ".txt";
         File confirmedFile;
         try {
-            confirmedFile = new File(String.valueOf(check(fileName)));
-            // Variable that represents the file path
-            init(confirmedFile);
-            //Initializes the data
-        } catch (IOException e) {
+            confirmedFile = new File(String.valueOf(check(fileName))); // Variable that represents the file path
+            init(confirmedFile); //Initializes the data into a table
+        }catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -47,19 +45,25 @@ public class TravelingSalesMan{
         //Isolates the String first line which shows N number of cities
         String ch = line.readLine();
         City.NumCity = Integer.parseInt(ch);
-        Random random = new Random();
+        City.initCities(City.getCities()); //allocating memory to array
+        theCity.table = new int[City.getCities()][City.getCities()];
 
-        City.initCities(City.getCities());//allocating memory to array
-        theCity.pop = new int[City.getCities()][City.getCities()];
-        int limit = City.getCities();
-        //Reads in the values, creating a random Population
-        for (int row = 0; row < City.getCities(); row++) {
-            String test = line.readLine();
-            int randPop = random.nextInt(limit);
-            for (int col = 0; col < City.getCities(); col++) {
-                theCity.pop[row][randPop] = test.charAt(col);
+        //int randPop = random.nextInt(City.getCities());
+        System.out.println();
+        for (int row = 0; row < City.NumCity; row++) {
+            //Reads String line and removes all non numeric values from it
+            String test = line.readLine().replaceAll("[^0-9.]", "");
+            for(int col = 0; col < test.length(); col++){
+                theCity.table[row][col] = City.convertToInt(test, col);
+                System.out.print(theCity.table[row][col]);
             }
-            System.out.println("Assigned Value @ Col: " + City.pop[row][randPop]);
+            System.out.println();
         }
+    }
+
+    public static void generateRandPop(){
+        //Random random = new Random();
+        System.out.println(theCity.table[0][1]);
+
     }
 }

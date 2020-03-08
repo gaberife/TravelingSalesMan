@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Random;
 
 public class City {
@@ -6,6 +10,8 @@ public class City {
     public static int NumCity; //Number of cities
     public static int cost;
     public static int pop[][];
+    public static int table[][];
+
 
 
     public City() {
@@ -38,9 +44,17 @@ public class City {
         return false;
     }
 
-    public static boolean checkZeroCost(int x, int y){ // Checks if cost is zero
+    public static boolean checkZeroCost(int row, int col){// Checks if cost is zero
+        int x = Character.getNumericValue(row);
+        int y = Character.getNumericValue(col);
         if(City.pop[x][y] != 0)
             return true;
         return false;
+    }
+
+    public static int convertToInt(String line, int column)  throws IOException {
+        char ch = line.charAt(column);
+        int number = Character.getNumericValue(ch);
+        return number;
     }
 }
