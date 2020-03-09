@@ -14,6 +14,7 @@ public class TravelingSalesMan {
         try {
             confirmedFile = new File(String.valueOf(check(fileName))); // Variable that represents the file path
             init(confirmedFile); //Initializes the data into a table
+            generateRandPop();
         }catch (IOException e) {
             e.printStackTrace();
         }
@@ -47,23 +48,36 @@ public class TravelingSalesMan {
         City.NumCity = Integer.parseInt(ch);
         City.initCities(City.getCities()); //allocating memory to array
         theCity.table = new int[City.getCities()][City.getCities()];
-
-        //int randPop = random.nextInt(City.getCities());
         System.out.println();
         for (int row = 0; row < City.NumCity; row++) {
             //Reads String line and removes all non numeric values from it
             String test = line.readLine().replaceAll("[^0-9.]", "");
             for(int col = 0; col < test.length(); col++){
                 theCity.table[row][col] = City.convertToInt(test, col);
-                System.out.print(theCity.table[row][col]);
             }
-            System.out.println();
         }
     }
 
-    public static void generateRandPop(){
-        //Random random = new Random();
-        System.out.println(theCity.table[0][1]);
+    public static void generateRandPop() {
+        Random random = new Random();
+        theCity.pop = new int[City.getCities()];
+        int row = 0;
+        int trackColNum[] = new int[City.getCities()];
+        System.out.println("This is the Random Population generated:" );
+        while(row < City.NumCity){
+            int randomColumnNumber = random.nextInt(City.getCities());
+            if (theCity.checkZeroCost(row, randomColumnNumber)){
+                if (theCity.checkRepeats(trackColNum,randomColumnNumber)) {
+                    theCity.pop[row] = theCity.table[row][randomColumnNumber];
+                    trackColNum[row] = randomColumnNumber;
+                    System.out.println(row + "," + randomColumnNumber + "\t");
+                    row++;
+                    //System.out.println(theCity.pop[row]);
 
+                }
+            }
+            //for(int i = 0; i < trackColNum.length; i ++ )
+                //System.out.print(trackColNum[i] + ",");
+        }
     }
 }

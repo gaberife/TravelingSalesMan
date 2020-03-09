@@ -3,13 +3,15 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Random;
+import java.lang.Object;
+import java.util.Arrays;
 
 public class City {
     public static int col; //column
     public static int row; //row
     public static int NumCity; //Number of cities
     public static int cost;
-    public static int pop[][];
+    public static int pop[];
     public static int table[][];
 
 
@@ -21,34 +23,26 @@ public class City {
     public static int getCities(){ return NumCity;}
 
     public static int[][] initCities(int NumCity){
-        return City.pop = new int[NumCity][NumCity];
+        return City.table = new int[NumCity][NumCity];
     }
 
-    public static void generateRandPop(){
-        Random random = new Random();
-        int i = 0;
-        while(i < City.NumCity){
-            int randPop = random.nextInt(City.NumCity);
-            City.pop[i][randPop] = (randPop);
-            System.out.println(City.pop[1][randPop]);
-            //Citys.pop[i][randPop] = 10;
+    public static void getPop(){
+        for(int row = 0; row < City.NumCity; row++) {
+            System.out.println(City.table[row][0]);
+            //System.out.println();
         }
     }
-    public static boolean checkRepeats(int y){ //checks for y'i repeats within the array
+    public static boolean checkRepeats(int[] tracker, int randomColumnNumber){ //checks for y'i repeats within the array
         for(int i = 0; i < City.NumCity; i++){
-            for(int j = 0; j < City.NumCity; j++)
-            if(City.pop[i][j] != City.pop[i][y]){
-                return true;
-            }
+            if(tracker[i] == randomColumnNumber)
+                return false;
         }
-        return false;
+        return true;
     }
 
-    public static boolean checkZeroCost(int row, int col){// Checks if cost is zero
-        int x = Character.getNumericValue(row);
-        int y = Character.getNumericValue(col);
-        if(City.pop[x][y] != 0)
-            return true;
+    public static boolean checkZeroCost(int row, int randomColumnNumber){ //Checks if cost is zero
+        if(City.table[row][randomColumnNumber] != 0)
+                return true;
         return false;
     }
 
