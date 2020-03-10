@@ -2,11 +2,10 @@ import java.util.*;
 import java.io.*;
 import java.io.File;
 
-public class TravelingSalesMan {
-    //public static ArrayList<City> city = new ArrayList<City>();
+public class TravelingSalesMan{
+
     public static City theCity = new City();
     public static LinkedList<Integer> trackColNum = new LinkedList<Integer>();
-
 
     public static void main(String[] args) {
         System.out.println("Welcome user, its time to solve a maze. Please enter the file path.");
@@ -17,7 +16,7 @@ public class TravelingSalesMan {
             confirmedFile = new File(String.valueOf(check(fileName))); // Variable that represents the file path
             init(confirmedFile); //Initializes the data into a table
             generateRandPop(); // Generates a random population
-            info();
+            info(); //Returns information about the population
         }catch (IOException e) {
             e.printStackTrace();
         }
@@ -63,7 +62,6 @@ public class TravelingSalesMan {
     public static void generateRandPop() {
         Random random = new Random();
         theCity.pop = new int[City.getCities()];
-        System.out.println();
         int row = 0;
         while(row < City.NumCity){
             int randomColumnNumber = random.nextInt(City.getCities());
@@ -77,15 +75,20 @@ public class TravelingSalesMan {
         }
     }
 
+    public static void geneticAlgorithm(){
+        info();
+
+    }
+
     public static void info(){
         System.out.println();
         theCity.printCurrentPopulation(trackColNum);
         System.out.println();
-        System.out.println("The Total Cost of Pop: " + theCity.calcTotalCost());
-        System.out.println("Row with the Highest Cost in Pop: " + theCity.returnHighestCostRow());
-        System.out.println("Highest Cost of Pop: " + theCity.returnHighestCost());
-        System.out.println("Row with the Second Highest Cost in Pop: " + theCity.returnNextHighestCostRow());
-        System.out.println(("Second Highest Cost in Pop: " + theCity.returnNextHighestCost()));
+        System.out.println("Total Cost:\t" + theCity.calcTotalCost());
+        System.out.println();
+        System.out.println("Row w/ HC: \t" + theCity.returnHighestCostRow());
+        System.out.println("HC:        \t" + theCity.returnHighestCost());
+        System.out.println("2ndHC Row: \t" + theCity.returnNextHighestCostRow());
+        System.out.println("2ndHC:    \t" + theCity.returnNextHighestCost());
     }
-
 }
