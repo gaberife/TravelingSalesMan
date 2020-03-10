@@ -1,10 +1,8 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+
 import java.io.IOException;
-import java.util.Random;
-import java.lang.Object;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
 
 public class City {
     public static int col; //column
@@ -14,41 +12,114 @@ public class City {
     public static int pop[];
     public static int table[][];
 
-
-
-    public City() {
-
-    }
-
     public static int getCities(){ return NumCity;}
 
     public static int[][] initCities(int NumCity){
         return City.table = new int[NumCity][NumCity];
     }
 
-    public static void getPop(){
-        for(int row = 0; row < City.NumCity; row++) {
-            System.out.println(City.table[row][0]);
-            //System.out.println();
-        }
-    }
-    public static boolean checkRepeats(int[] tracker, int randomColumnNumber){ //checks for y'i repeats within the array
-        for(int i = 0; i < City.NumCity; i++){
-            if(tracker[i] == randomColumnNumber)
-                return false;
-        }
-        return true;
-    }
-
-    public static boolean checkZeroCost(int row, int randomColumnNumber){ //Checks if cost is zero
-        if(City.table[row][randomColumnNumber] != 0)
-                return true;
-        return false;
-    }
-
     public static int convertToInt(String line, int column)  throws IOException {
         char ch = line.charAt(column);
         int number = Character.getNumericValue(ch);
         return number;
+    }
+
+    public static boolean checkRepeats(LinkedList tracker, int randomColumnNumber){
+        //If Linked list does not contain the random Number returns False, else returns true
+        if(!tracker.contains(randomColumnNumber))
+                return false;
+        return true;
+    }
+
+    public static boolean checkIfZeroCost(int row, int randomColumnNumber){
+        //If the cost of the amount does not equals 0, returns true
+        if(City.table[row][randomColumnNumber] == 0)
+                return true;
+        return false;
+    }
+
+    public static int calcTotalCost(){
+        int totalCost= 0;
+        for(int i = 0; i < NumCity; i++)
+            totalCost = totalCost + pop[i];
+        return totalCost;
+    }
+
+    public static int returnHighestCostRow(){
+        int highestCost = 0;
+        int highestCostRow = 0;
+        int i = 0;
+        while(i < NumCity){
+           if(highestCost < pop[i]){
+               highestCost = pop[i];
+               highestCostRow = i;
+           }
+            i++;
+        }
+        return highestCostRow;
+    }
+
+    public static int returnHighestCost(){
+        int highestCost = 0;
+        int i = 0;
+        while(i < NumCity){
+            if(highestCost < pop[i]){
+                highestCost = pop[i];
+            }
+            i++;
+        }
+        return highestCost;
+    }
+
+    public static int indexOfSmallest(){
+        int index = 0;
+        int min = pop[index];
+        for (int i = 1; i < pop.length; i++){
+            if (pop[i] <= min){
+                min = pop[i];
+                index = i;
+            }
+        }
+        return index;
+    }
+
+    public static int returnNextHighestCostRow() {
+        int largest, secondLargest, largestRow, secondLargestRow;
+        largest = secondLargest = Collections.min(Arrays.asList(City.returnHighestCostRow())); //first
+        largestRow = secondLargestRow  = indexOfSmallest();
+        for (int i = 0; i < NumCity; i++)
+            if (pop[i] > largest) {
+                secondLargest = largest;
+                secondLargestRow = largestRow;
+                largestRow = i;
+                largest = pop[i];
+            } else if (pop[i] > secondLargest && pop[i] != largest) {
+                secondLargest = pop[i];
+                secondLargestRow = i;
+            }
+        return secondLargestRow;
+    }
+
+    public static int returnNextHighestCost() {
+        int largest, secondLargest;
+                //secondRow;
+        largest = secondLargest = Collections.min(Arrays.asList(City.returnHighestCostRow())); //first
+        //secondRow = 0;
+        for (int i = 0; i < NumCity; i++)
+            if (pop[i] > largest) {
+                secondLargest = largest;
+                //secondRow = i;
+                largest = pop[i];
+            } else if (pop[i] > secondLargest && pop[i] != largest) {
+                secondLargest = pop[i];
+                //secondRow = i;
+            }
+        return secondLargest;
+    }
+
+    public static void printCurrentPopulation(LinkedList tracker){
+        for(int i = 0; i < NumCity; i++){
+            System.out.println("The Highest Cost Of " + i + "," + tracker.get(i) + " is " + City.pop[i]);
+        }
     }
 }

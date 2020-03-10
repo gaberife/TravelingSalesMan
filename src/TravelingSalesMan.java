@@ -5,6 +5,8 @@ import java.io.File;
 public class TravelingSalesMan {
     //public static ArrayList<City> city = new ArrayList<City>();
     public static City theCity = new City();
+    public static LinkedList<Integer> trackColNum = new LinkedList<Integer>();
+
 
     public static void main(String[] args) {
         System.out.println("Welcome user, its time to solve a maze. Please enter the file path.");
@@ -14,7 +16,8 @@ public class TravelingSalesMan {
         try {
             confirmedFile = new File(String.valueOf(check(fileName))); // Variable that represents the file path
             init(confirmedFile); //Initializes the data into a table
-            generateRandPop();
+            generateRandPop(); // Generates a random population
+            info();
         }catch (IOException e) {
             e.printStackTrace();
         }
@@ -48,7 +51,6 @@ public class TravelingSalesMan {
         City.NumCity = Integer.parseInt(ch);
         City.initCities(City.getCities()); //allocating memory to array
         theCity.table = new int[City.getCities()][City.getCities()];
-        System.out.println();
         for (int row = 0; row < City.NumCity; row++) {
             //Reads String line and removes all non numeric values from it
             String test = line.readLine().replaceAll("[^0-9.]", "");
@@ -61,23 +63,29 @@ public class TravelingSalesMan {
     public static void generateRandPop() {
         Random random = new Random();
         theCity.pop = new int[City.getCities()];
+        System.out.println();
         int row = 0;
-        int trackColNum[] = new int[City.getCities()];
-        System.out.println("This is the Random Population generated:" );
         while(row < City.NumCity){
             int randomColumnNumber = random.nextInt(City.getCities());
-            if (theCity.checkZeroCost(row, randomColumnNumber)){
-                if (theCity.checkRepeats(trackColNum,randomColumnNumber)) {
+            if (!theCity.checkIfZeroCost(row, randomColumnNumber)){
+                if (!theCity.checkRepeats(trackColNum,randomColumnNumber)) {
                     theCity.pop[row] = theCity.table[row][randomColumnNumber];
-                    trackColNum[row] = randomColumnNumber;
-                    System.out.println(row + "," + randomColumnNumber + "\t");
+                    trackColNum.add(randomColumnNumber);
                     row++;
-                    //System.out.println(theCity.pop[row]);
-
                 }
             }
-            //for(int i = 0; i < trackColNum.length; i ++ )
-                //System.out.print(trackColNum[i] + ",");
         }
     }
+
+    public static void info(){
+        System.out.println();
+        theCity.printCurrentPopulation(trackColNum);
+        System.out.println();
+        System.out.println("The Total Cost of Pop: " + theCity.calcTotalCost());
+        System.out.println("Row with the Highest Cost in Pop: " + theCity.returnHighestCostRow());
+        System.out.println("Highest Cost of Pop: " + theCity.returnHighestCost());
+        System.out.println("Row with the Second Highest Cost in Pop: " + theCity.returnNextHighestCostRow());
+        System.out.println(("Second Highest Cost in Pop: " + theCity.returnNextHighestCost()));
+    }
+
 }
