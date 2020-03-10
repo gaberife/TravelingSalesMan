@@ -91,4 +91,5 @@ public class TravelingSalesMan{
         System.out.println("2ndHC Row: \t" + theCity.returnNextHighestCostRow());
         System.out.println("2ndHC:    \t" + theCity.returnNextHighestCost());
     }
+    //Test
 }

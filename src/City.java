@@ -126,5 +126,5 @@ public class City {
             System.out.println("The cost of " + i + "," + tracker.get(i) + " is " + City.pop[i]);
         }
     }
-
+    //test
 }
