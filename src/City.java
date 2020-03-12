@@ -9,8 +9,7 @@ public class City {
     public static int row; //row
     public static int NumCity; //Number of cities
     public static int cost;
-    public static int pop[];
-    public static int temp[];
+    public static LinkedList<Integer> pop = new LinkedList<Integer>();
     public static int table[][];
 
     public static int getCities(){ return NumCity;} //Mutator Methods
@@ -39,10 +38,11 @@ public class City {
         return false;
     } //Accessor Method
 
-    public static int calcTotalCost(int [] pop){
-        int totalCost= 0;
-        for(int i = 0; i < NumCity; i++)
-            totalCost = totalCost + pop[i];
+    public static int calcTotalCost(LinkedList <Integer> population) {
+        int totalCost = 0;
+        for (int i = 0; i < NumCity; i++) {
+            totalCost = totalCost + population.get(i);
+        }
         return totalCost;
     } //Accessor Method
 
@@ -51,8 +51,8 @@ public class City {
         int highestCostRow = 0;
         int i = 0;
         while(i < NumCity){
-           if(highestCost < pop[i]){
-               highestCost = pop[i];
+           if(highestCost < pop.get(i)){
+               highestCost = pop.get(i);
                highestCostRow = i;
            }
             i++;
@@ -65,8 +65,8 @@ public class City {
         int highestCostRow = 0;
         int i = 0;
         while(i < NumCity){
-            if(highestCost < pop[i]){
-                highestCost = pop[i];
+            if(highestCost < pop.get(i)){
+                highestCost = pop.get(i);
                 highestCostRow = i;
             }
             i++;
@@ -79,8 +79,8 @@ public class City {
         int highestCost = 0;
         int i = 0;
         while(i < NumCity){
-            if(highestCost < pop[i]){
-                highestCost = pop[i];
+            if(highestCost < pop.get(i)){
+                highestCost = pop.get(i);
             }
             i++;
         }
@@ -89,10 +89,10 @@ public class City {
 
     public static int indexOfSmallest(){
         int index = 0;
-        int min = pop[index];
-        for (int i = 1; i < pop.length; i++){
-            if (pop[i] <= min){
-                min = pop[i];
+        int min = pop.get(index);
+        for (int i = 1; i < pop.size(); i++){
+            if (pop.get(i) <= min){
+                min = pop.get(i);
                 index = i;
             }
         }
@@ -104,14 +104,16 @@ public class City {
         largest = secondLargest = Collections.min(Arrays.asList(City.returnHighestCostRow())); //first
         largestRow = secondLargestRow  = indexOfSmallest();
         for (int i = 0; i < NumCity; i++)
-            if (pop[i] > largest) {
-                secondLargest = largest;
-                secondLargestRow = largestRow;
-                largestRow = i;
-                largest = pop[i];
-            } else if (pop[i] > secondLargest && pop[i] != largest) {
-                secondLargest = pop[i];
-                secondLargestRow = i;
+            if(pop.get(i) != 0) {
+                if (pop.get(i) > largest) {
+                    secondLargest = largest;
+                    secondLargestRow = largestRow;
+                    largestRow = i;
+                    largest = pop.get(i);
+                } else if (pop.get(i) > secondLargest && pop.get(i) != largest) {
+                    secondLargest = pop.get(i);
+                    secondLargestRow = i;
+                }
             }
         return secondLargestRow;
     } //Accessor Method
@@ -121,14 +123,16 @@ public class City {
         largest = secondLargest = Collections.min(Arrays.asList(City.returnHighestCostRow())); //first
         largestRow = secondLargestRow  = indexOfSmallest();
         for (int i = 0; i < NumCity; i++)
-            if (pop[i] > largest) {
-                secondLargest = largest;
-                secondLargestRow = largestRow;
-                largestRow = i;
-                largest = pop[i];
-            } else if (pop[i] > secondLargest && pop[i] != largest) {
-                secondLargest = pop[i];
-                secondLargestRow = i;
+            if(pop.get(i) != 0) {
+                if (pop.get(i) > largest) {
+                    secondLargest = largest;
+                    secondLargestRow = largestRow;
+                    largestRow = i;
+                    largest = pop.get(i);
+                } else if (pop.get(i) > secondLargest && pop.get(i) != largest) {
+                    secondLargest = pop.get(i);
+                    secondLargestRow = i;
+                }
             }
         int column = colNum.get(secondLargestRow);
         return column;
@@ -140,24 +144,20 @@ public class City {
         largest = secondLargest = Collections.min(Arrays.asList(City.returnHighestCostRow())); //first
         //secondRow = 0;
         for (int i = 0; i < NumCity; i++)
-            if (pop[i] > largest) {
+            if (pop.get(i) > largest) {
                 secondLargest = largest;
                 //secondRow = i;
-                largest = pop[i];
-            } else if (pop[i] > secondLargest && pop[i] != largest) {
-                secondLargest = pop[i];
+                largest = pop.get(i);
+            } else if (pop.get(i) > secondLargest && pop.get(i) != largest) {
+                secondLargest = pop.get(i);
                 //secondRow = i;
             }
         return secondLargest;
     } //Accessor Method
 
-    public static void switchMethod(int highest, int secondHighest, LinkedList tracker){
-
-    }
-
-    public static void printCurrentPopulation(LinkedList tracker, int [] pop){
+    public static void printCurrentPopulation(LinkedList tracker, LinkedList pop){
         for(int i = 0; i < NumCity; i++){
-            System.out.println("The cost of " + i + "," + tracker.get(i) + " is " + pop[i]);
+            System.out.println("The cost of " + i + "," + tracker.get(i) + " is " + pop.get(i));
         }
     }
 }
