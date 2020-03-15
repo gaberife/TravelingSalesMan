@@ -24,12 +24,13 @@ public class City {
         return number;
     } //Mutator Method
 
-    public static boolean checkRepeats(LinkedList tracker, int randomColumnNumber){
+    /*public static boolean checkRepeats(LinkedList tracker, int randomColumnNumber){
         //If Linked list does not contain the random Number returns False, else returns true
         if(!tracker.contains(randomColumnNumber))
                 return false;
         return true;
     } //Accessor Method
+     */
 
     public static boolean checkIfZeroCost(int row, int randomColumnNumber){
         //If the cost of the amount does not equals 0, returns true
@@ -100,22 +101,23 @@ public class City {
     } //Accessor Method
 
     public static int returnNextHighestCostRow() {
-        int largest, secondLargest, largestRow, secondLargestRow;
-        largest = secondLargest = Collections.min(Arrays.asList(City.returnHighestCostRow())); //first
-        largestRow = secondLargestRow  = indexOfSmallest();
+        int nextOne = 0;
+        int largest, nextLargest, largestRow, nextLargestRow;
+        largest = nextLargest = Collections.min(Arrays.asList(City.returnHighestCostRow())); //first
+        largestRow = nextLargestRow  = indexOfSmallest();
         for (int i = 0; i < NumCity; i++)
             if(pop.get(i) != 0) {
                 if (pop.get(i) > largest) {
-                    secondLargest = largest;
-                    secondLargestRow = largestRow;
+                    nextLargest = largest;
+                    nextLargestRow = largestRow;
                     largestRow = i;
                     largest = pop.get(i);
-                } else if (pop.get(i) > secondLargest && pop.get(i) != largest) {
-                    secondLargest = pop.get(i);
-                    secondLargestRow = i;
+                } else if (pop.get(i) > nextLargest && pop.get(i) != largest) {
+                    nextLargest = pop.get(i);
+                    nextLargestRow = i;
                 }
             }
-        return secondLargestRow;
+        return nextLargestRow;
     } //Accessor Method
 
     public static int returnNextHighestCostCol(LinkedList<Integer> colNum) {
